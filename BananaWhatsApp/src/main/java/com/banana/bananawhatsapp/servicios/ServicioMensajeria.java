@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -21,8 +20,9 @@ public class ServicioMensajeria implements IServicioMensajeria{
     @Override
     public Mensaje enviarMensaje(Usuario remitente, Usuario destinatario, String texto) throws UsuarioException, MensajeException {
         if(Validaciones.isUserValid(remitente) && Validaciones.isUserValid(destinatario)){
-            Mensaje m = new Mensaje(null, remitente, destinatario, texto, null);
-            return repo.save(m);
+            Mensaje msg = new Mensaje(null,remitente,destinatario,texto,null);
+            repo.save(msg);
+            return msg;
         }else{
             throw new UsuarioException("Usuarios incorrectos");
         }
@@ -31,12 +31,8 @@ public class ServicioMensajeria implements IServicioMensajeria{
     @Override
     public List<Mensaje> mostrarChatConUsuario(Usuario remitente, Usuario destinatario) throws UsuarioException, MensajeException {
         if(Validaciones.isUserValid(remitente) && Validaciones.isUserValid(destinatario)){
-            try{
-                return repo.getMensajeList(remitente, destinatario);
-            }catch (SQLException e){
-                throw new UsuarioException("por poner");
-            }
-
+            // repo
+            return null;
         }else{
             throw new UsuarioException("Usuarios erroneos");
         }
@@ -45,7 +41,7 @@ public class ServicioMensajeria implements IServicioMensajeria{
     @Override
     public boolean borrarChatConUsuario(Usuario remitente, Usuario destinatario) throws UsuarioException, MensajeException {
         if(Validaciones.isUserValid(remitente) && Validaciones.isUserValid(destinatario)){
-            repo.borrarEntreUsuarios(remitente, destinatario);
+            return true;
         }else{
             throw new UsuarioException("Ususarios erroneos");
         }

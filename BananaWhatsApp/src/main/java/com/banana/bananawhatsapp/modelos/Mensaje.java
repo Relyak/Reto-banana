@@ -3,6 +3,8 @@ package com.banana.bananawhatsapp.modelos;
 import com.banana.bananawhatsapp.exceptions.MensajeException;
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -10,15 +12,20 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @ToString
+@Entity
+@Table(name = "mensaje")
 public class Mensaje {
     private Integer id;
 
+    private String cuerpo;
+    private LocalDate fecha;
+
+    
     private Usuario remitente;
 
     private Usuario destinatario;
 
-    private String cuerpo;
-    private LocalDate fecha;
+
 
     private boolean validarFecha() {
         return this.fecha != null && this.fecha.compareTo(LocalDate.now()) <= 0;

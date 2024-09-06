@@ -20,8 +20,9 @@ public class ServicioMensajeria implements IServicioMensajeria{
     @Override
     public Mensaje enviarMensaje(Usuario remitente, Usuario destinatario, String texto) throws UsuarioException, MensajeException {
         if(Validaciones.isUserValid(remitente) && Validaciones.isUserValid(destinatario)){
-            // repo
-            return null;
+            Mensaje msg = new Mensaje(null,remitente,destinatario,texto,null);
+            repo.save(msg);
+            return msg;
         }else{
             throw new UsuarioException("Usuarios incorrectos");
         }

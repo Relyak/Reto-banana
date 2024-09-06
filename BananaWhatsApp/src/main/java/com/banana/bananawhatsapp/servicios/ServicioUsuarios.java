@@ -19,7 +19,7 @@ public class ServicioUsuarios implements IServicioUsuarios{
 
     @Override
     public Usuario obtener(int id) throws UsuarioException {
-        return null;
+        return repo.findById(id).orElseThrow(UsuarioException::new);
     }
 
     @Override
@@ -51,12 +51,10 @@ public class ServicioUsuarios implements IServicioUsuarios{
     @Override
     public Usuario actualizarUsuario(Usuario usuario) throws UsuarioException {
         if(Validaciones.isUserValid(usuario) && repo.findById(usuario.getId()).isPresent()){
-            repo.save(usuario);
+            return repo.save(usuario);
         }else{
             throw new UsuarioException("Error de usuario");
         }
-        // busco usuario si existe, creo que el delete no envia nada
-        return null;
     }
 
     @Override

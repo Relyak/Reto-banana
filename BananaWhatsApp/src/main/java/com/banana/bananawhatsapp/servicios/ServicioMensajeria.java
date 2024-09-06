@@ -34,7 +34,7 @@ public class ServicioMensajeria implements IServicioMensajeria{
             // repo
             return null;
         }else{
-            throw new UsuarioException("Usuarios erróneos");
+            throw new UsuarioException("Usuarios erroneos");
         }
     }
 
@@ -43,7 +43,7 @@ public class ServicioMensajeria implements IServicioMensajeria{
         if(Validaciones.isUserValid(remitente) && Validaciones.isUserValid(destinatario)){
             return true;
         }else{
-            throw new UsuarioException("Ususarios erróneos");
+            throw new UsuarioException("Ususarios erroneos");
         }
 
     }

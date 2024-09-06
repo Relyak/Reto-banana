@@ -2,9 +2,11 @@ package com.banana.bananawhatsapp.modelos;
 
 import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import lombok.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,9 +14,8 @@ import java.time.LocalDate;
 @Getter
 @ToString
 @Entity
-@Table(name = "usuario")
+@Table
 public class Usuario {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -43,5 +44,21 @@ public class Usuario {
                 && validarAlta()
         ) return true;
         else throw new UsuarioException("Usuario no valido");
+    }
+
+
+    @OneToMany(mappedBy = "remitente", cascade = CascadeType.ALL)
+    private List<Mensaje> mensajesRemitente;
+
+
+    @OneToMany(mappedBy = "destinatario", cascade = CascadeType.ALL)
+    private List<Mensaje> mensajesDestinatario;
+
+    public Usuario(Integer id, String nombre, String email, LocalDate alta, boolean activo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.alta = alta;
+        this.activo = activo;
     }
 }

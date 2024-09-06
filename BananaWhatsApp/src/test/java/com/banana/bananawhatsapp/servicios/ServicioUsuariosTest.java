@@ -5,6 +5,7 @@ import com.banana.bananawhatsapp.modelos.Usuario;
 import com.banana.bananawhatsapp.util.DBUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -14,7 +15,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ServicioUsuariosTest {
-
+    @Autowired
     IServicioUsuarios servicio;
 
     @BeforeEach

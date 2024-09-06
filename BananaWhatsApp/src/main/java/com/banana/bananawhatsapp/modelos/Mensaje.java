@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,17 +13,14 @@ import java.time.LocalDate;
 @Getter
 @ToString
 @Entity
-@Table(name = "mensaje")
+@Table
 public class Mensaje {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @ManyToOne
     @JoinColumn(name = "from_user")
     private Usuario remitente;
-
     @ManyToOne
     @JoinColumn(name = "to_user")
     private Usuario destinatario;
@@ -45,6 +43,7 @@ public class Mensaje {
         ) return true;
         else throw new MensajeException("Mensaje no valido");
     }
+
 
 
 }

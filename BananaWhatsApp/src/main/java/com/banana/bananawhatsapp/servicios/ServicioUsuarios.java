@@ -60,6 +60,7 @@ public class ServicioUsuarios implements IServicioUsuarios{
     @Override
     // No entiendo este metodo...
     public Set<Usuario> obtenerPosiblesDesinatarios(Usuario usuario, int max) throws UsuarioException {
+        //
         if(Validaciones.isUserValid(usuario)){
             // mmmm quizá en el repo?
             // quizá en la base

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
@@ -29,10 +30,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MensajeRepositoryTest {
     @Autowired
-
-    IUsuarioRepository repoUsuario;
+    IUsuarioRepositoryData repoUsuario;
     @Autowired
-
     IMensajeRepository repoMensaje;
 
     @BeforeEach
@@ -42,9 +41,10 @@ class MensajeRepositoryTest {
 
     @Test
     @Order(1)
+    @Transactional
     void dadoUnMensajeValido_cuandoCrear_entoncesMensajeValido() throws Exception {
-        Usuario remitente = repoUsuario.obtener(1);
-        Usuario destinatario = repoUsuario.obtener(2);
+        Usuario remitente = repoUsuario.findById(1).get();
+        Usuario destinatario = repoUsuario.findById(2).get();
 
         Mensaje message = new Mensaje(null, remitente, destinatario, "De acuerdo Juana. Un saludo.", LocalDate.now());
 
@@ -55,6 +55,7 @@ class MensajeRepositoryTest {
 
     @Test
     @Order(2)
+    @Transactional
     void dadoUnMensajeNOValido_cuandoCrear_entoncesExcepcion() throws Exception {
         Usuario remitente = new Usuario(1, null, null, null, true);
         Usuario destinatario = new Usuario(2, null, null, null, true);
@@ -67,7 +68,7 @@ class MensajeRepositoryTest {
     @Test
     @Order(3)
     void dadoUnUsuarioValido_cuandoObtener_entoncesListaMensajes() throws Exception {
-        Usuario user = repoUsuario.obtener(1);
+        Usuario user = repoUsuario.findById(1).get();
 
         List<Mensaje> userMessages = repoMensaje.obtener(user);
         assertNotNull(userMessages);
@@ -86,8 +87,8 @@ class MensajeRepositoryTest {
     @Test
     @Order(5)
     void dadoUnRemitenteValido_cuandoBorrarEntre_entoncesOK() throws Exception {
-        Usuario remitente = repoUsuario.obtener(1);
-        Usuario destinatario = repoUsuario.obtener(2);
+        Usuario remitente = repoUsuario.findById(1).get();
+        Usuario destinatario = repoUsuario.findById(2).get();
 
         boolean borrarChat = repoMensaje.borrarEntre(remitente, destinatario);
         assertTrue(borrarChat);
@@ -96,9 +97,9 @@ class MensajeRepositoryTest {
     @Test
     @Order(6)
     void dadoUnRemitenteNOValido_cuandoBorrarEntre_entoncesExcepcion() throws Exception {
-        Usuario remitente = repoUsuario.obtener(1);
+        Usuario remitente = repoUsuario.findById(1).get();
         remitente.setActivo(false);
-        Usuario destinatario = repoUsuario.obtener(2);
+        Usuario destinatario = repoUsuario.findById(2).get();
 
         assertThrows(UsuarioException.class, () -> {
             repoMensaje.borrarEntre(remitente, destinatario);
@@ -108,7 +109,7 @@ class MensajeRepositoryTest {
     @Test
     @Order(7)
     void dadoUnUsuarioValido_cuandoBorrarTodos_entoncesOK() throws Exception {
-        Usuario user = repoUsuario.obtener(1);
+        Usuario user = repoUsuario.findById(1).get();
 
         boolean borrarChat = repoMensaje.borrarTodos(user);
         assertTrue(borrarChat);

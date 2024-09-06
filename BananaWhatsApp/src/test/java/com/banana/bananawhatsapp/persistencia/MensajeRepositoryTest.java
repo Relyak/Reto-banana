@@ -37,7 +37,7 @@ class MensajeRepositoryTest {
 
         Mensaje message = new Mensaje(null, remitente, destinatario, "De acuerdo Juana. Un saludo.", LocalDate.now());
 
-        repoMensaje.crear(message);
+        repoMensaje.save(message);
         assertThat(message, notNullValue());
         assertThat(message.getId(), greaterThan(0));
     }

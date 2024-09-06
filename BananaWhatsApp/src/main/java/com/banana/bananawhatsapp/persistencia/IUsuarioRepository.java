@@ -1,6 +1,7 @@
 package com.banana.bananawhatsapp.persistencia;
 
 import com.banana.bananawhatsapp.modelos.Usuario;
+import org.springframework.data.repository.CrudRepository;
 
 import java.sql.SQLException;
 import java.util.Set;

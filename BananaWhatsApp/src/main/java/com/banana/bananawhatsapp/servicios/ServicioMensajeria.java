@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -31,8 +32,12 @@ public class ServicioMensajeria implements IServicioMensajeria{
     @Override
     public List<Mensaje> mostrarChatConUsuario(Usuario remitente, Usuario destinatario) throws UsuarioException, MensajeException {
         if(Validaciones.isUserValid(remitente) && Validaciones.isUserValid(destinatario)){
-            // repo
-            return null;
+            try{
+                return repo.obtenerEntre(remitente, destinatario);
+            }catch (SQLException e){
+                throw new UsuarioException(e.getMessage());
+            }
+
         }else{
             throw new UsuarioException("Usuarios erroneos");
         }
@@ -41,7 +46,14 @@ public class ServicioMensajeria implements IServicioMensajeria{
     @Override
     public boolean borrarChatConUsuario(Usuario remitente, Usuario destinatario) throws UsuarioException, MensajeException {
         if(Validaciones.isUserValid(remitente) && Validaciones.isUserValid(destinatario)){
-            return true;
+            try{
+                repo.borrarEntre(remitente, destinatario);
+                return true;
+            }catch(Exception e){
+                // TODO: mejor excepción
+                throw new UsuarioException(e.getMessage());
+            }
+
         }else{
             throw new UsuarioException("Ususarios erroneos");
         }

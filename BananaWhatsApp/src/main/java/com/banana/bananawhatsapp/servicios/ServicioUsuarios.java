@@ -2,31 +2,32 @@ package com.banana.bananawhatsapp.servicios;
 
 import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import com.banana.bananawhatsapp.modelos.Usuario;
+import com.banana.bananawhatsapp.persistencia.IMensajeRepository;
 import com.banana.bananawhatsapp.persistencia.IUsuarioRepositoryData;
-import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.Set;
 
 @Service
 public class ServicioUsuarios implements IServicioUsuarios{
 
     @Autowired
-    IUsuarioRepositoryData repo;
+    IUsuarioRepositoryData repoUser;
 
+    @Autowired
+    IMensajeRepository repoMen;
 
     @Override
     public Usuario obtener(int id) throws UsuarioException {
-        return repo.findById(id).orElseThrow(UsuarioException::new);
+        return repoUser.findById(id).orElseThrow(UsuarioException::new);
     }
 
     @Override
     public Usuario crearUsuario(Usuario usuario) throws UsuarioException {
         if(Validaciones.isUserValid(usuario)){
 
-            repo.save(usuario);
+            repoUser.save(usuario);
             return usuario;
         }else{
             throw new UsuarioException("Usuario no válido");
@@ -37,11 +38,13 @@ public class ServicioUsuarios implements IServicioUsuarios{
     public boolean borrarUsuario(Usuario usuario) throws UsuarioException {
         // debería buscar el usuario en caso que exista?
         // voy a suponer que el id existe
-        if(Validaciones.isUserValid(usuario) && repo.findById(usuario.getId()).isPresent()){
-            // debería coger todos los mensajes?
-            // borrar mensajes donde el usuario existe
+        if(Validaciones.isUserValid(usuario) && repoUser.findById(usuario.getId()).isPresent()){
+            try {
+                repoMen.borrarTodos(usuario);
+                repoUser.delete(usuario);
+            }catch (Exception e){
 
-            repo.delete(usuario);
+            }
         }
 
         // quizás devolver la excepción?
@@ -50,8 +53,8 @@ public class ServicioUsuarios implements IServicioUsuarios{
 
     @Override
     public Usuario actualizarUsuario(Usuario usuario) throws UsuarioException {
-        if(Validaciones.isUserValid(usuario) && repo.findById(usuario.getId()).isPresent()){
-            return repo.save(usuario);
+        if(Validaciones.isUserValid(usuario) && repoUser.findById(usuario.getId()).isPresent()){
+            return repoUser.save(usuario);
         }else{
             throw new UsuarioException("Error de usuario");
         }

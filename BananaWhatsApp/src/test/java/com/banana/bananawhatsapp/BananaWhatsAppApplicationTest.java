@@ -1,9 +1,11 @@
 package com.banana.bananawhatsapp;
 
 import com.banana.bananawhatsapp.config.SpringConfig;
+import com.banana.bananawhatsapp.persistencia.IUsuarioRepositoryData;
 import com.banana.bananawhatsapp.util.DBUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -20,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ContextConfiguration(classes = {SpringConfig.class})
 @EnableAutoConfiguration
 class BananaWhatsAppApplicationTest {
+
     @PersistenceUnit
     EntityManagerFactory emf;
     @PersistenceContext

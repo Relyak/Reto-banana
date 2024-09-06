@@ -6,7 +6,7 @@ public class Validaciones {
 
     // TODO: quizás debería ir en el modelo
     public static boolean isUserValid(final Usuario user){
-        return user != null && user.getNombre().isBlank() == false;
+        return user != null && user.getNombre().isBlank() == false; // TODO: comprobar email (regex?)
     }
 
     public static boolean isMessageValid(final String message){

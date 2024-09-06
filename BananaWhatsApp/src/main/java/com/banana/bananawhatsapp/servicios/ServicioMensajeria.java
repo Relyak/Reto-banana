@@ -41,7 +41,6 @@ public class ServicioMensajeria implements IServicioMensajeria{
             throw new UsuarioException("Ususarios erroneos");
         }
 
-        return false;
     }
 
 

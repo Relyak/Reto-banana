@@ -15,6 +15,8 @@ public class ServicioUsuarios implements IServicioUsuarios{
 
     @Autowired
     IUsuarioRepositoryData repo;
+
+
     @Override
     public Usuario obtener(int id) throws UsuarioException {
         return null;
@@ -36,6 +38,9 @@ public class ServicioUsuarios implements IServicioUsuarios{
         // debería buscar el usuario en caso que exista?
         // voy a suponer que el id existe
         if(Validaciones.isUserValid(usuario) && repo.findById(usuario.getId()).isPresent()){
+            // debería coger todos los mensajes?
+            // borrar mensajes donde el usuario existe
+
             repo.delete(usuario);
         }
 

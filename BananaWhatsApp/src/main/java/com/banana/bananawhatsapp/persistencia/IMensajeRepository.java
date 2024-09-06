@@ -15,7 +15,6 @@ public interface IMensajeRepository extends JpaRepository<Mensaje,Integer> {
     //modificado este metodo porque no tenia sentido con esta forma de hacerlo
     @Query("SELECT m FROM Mensaje m WHERE (m.remitente = cliente AND m.destinatario = aEnviar) OR (m.remitente = aEnviar AND m.destinatario = cliente)")
     public List<Mensaje> getMensajeList(@Param("cliente") Usuario cliente, @Param("aEnviar") Usuario aEnviar) throws SQLException;
-
     @Query("DELETE FROM Mensaje m WHERE (m.remitente = cliente AND m.destinatario = aEnviar) OR (m.remitente = aEnviar AND m.destinatario = cliente)")
     public boolean borrarEntreUsuarios(Usuario remitente, Usuario destinatario) throws Exception;
     @Query("DELETE FROM Mensaje m WHERE (m.usuario = usuario")

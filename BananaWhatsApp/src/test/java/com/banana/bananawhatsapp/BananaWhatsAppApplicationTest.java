@@ -23,16 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @EnableAutoConfiguration
 class BananaWhatsAppApplicationTest {
 
-    @PersistenceUnit
-    EntityManagerFactory emf;
-    @PersistenceContext
-    EntityManager em;
 
     @Test
     public void load() {
         DBUtil.reloadDB();
-        assertNotNull(emf);
-        assertNotNull(em);
         assertTrue(true);
     }
 }

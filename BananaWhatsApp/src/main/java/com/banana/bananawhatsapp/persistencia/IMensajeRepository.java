@@ -19,8 +19,8 @@ public interface IMensajeRepository extends JpaRepository<Mensaje,Integer> {
     @Query("SELECT m FROM Mensaje m WHERE (m.remitente = :cliente AND m.destinatario = :aEnviar) OR (m.remitente = :aEnviar AND m.destinatario = :cliente)")
     public List<Mensaje> obtenerEntre(@Param("cliente") Usuario cliente, @Param("aEnviar") Usuario aEnviar) throws SQLException;
     @Query("DELETE FROM Mensaje m WHERE (m.remitente = :cliente AND m.destinatario = :aEnviar) OR (m.remitente = :aEnviar AND m.destinatario = :cliente)")
-    public boolean borrarEntre(Usuario remitente, Usuario destinatario) throws Exception;
-    @Query("DELETE FROM Mensaje m WHERE (m.usuario = usuario")
-    public boolean borrarTodos(Usuario usuario) throws SQLException;
+    public boolean borrarEntre(@Param("remitente")Usuario remitente, @Param("destinatario")Usuario destinatario) throws Exception;
+    @Query("DELETE FROM Mensaje m WHERE (m.usuario = :usuario")
+    public boolean borrarTodos(@Param("usuario")Usuario usuario) throws SQLException;
 
 }

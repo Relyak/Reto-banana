@@ -49,7 +49,7 @@ class MensajeRepositoryTest {
         Usuario destinatario = new Usuario(2, null, null, null, true);
         Mensaje message = new Mensaje(null, destinatario, remitente, "SMS < 10", LocalDate.now());
         assertThrows(Exception.class, () -> {
-            repoMensaje.crear(message);
+            repoMensaje.save(message);
         });
     }
 
